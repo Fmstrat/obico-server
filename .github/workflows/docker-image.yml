@@ -28,7 +28,7 @@ jobs:
         file: ./backend/Dockerfile
         no-cache: true
         push: true
-        tags: fmstrat/obico-server:latest
+        tags: ghcr.io/fmstrat/obico-server:latest
 
   build_ml_api:
     name: Build and push ML API
@@ -48,4 +48,4 @@ jobs:
         file: ./ml_api/Dockerfile
         no-cache: true
         push: true
-        tags: fmstrat/obico-ml-api:latest
+        tags: ghcr.io/fmstrat/obico-ml-api:latest
