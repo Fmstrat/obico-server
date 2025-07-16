@@ -1,0 +1,6 @@
+version: "1"
+rules:
+  - base: release
+    upstream: TheSpaghettiDetective:release
+    mergeMethod: rebase
+    mergeUnstable: true

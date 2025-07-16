@@ -1,0 +1,51 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ "release" ]
+  pull_request:
+    branches: [ "release" ]
+  schedule:
+    - cron: '0 0 1 * *' # Once a month
+
+jobs:
+
+  build_backend:
+    name: Build and push backend
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Login to Docker Hub
+      uses: docker/login-action@v2
+      with:
+        registry: ghcr.io
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+    - name: Build and push Docker images
+      uses: docker/build-push-action@v3.3.0
+      with:
+        context: ./backend
+        file: ./backend/Dockerfile
+        no-cache: true
+        push: true
+        tags: fmstrat/obico-server:latest
+
+  build_ml_api:
+    name: Build and push ML API
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Login to Docker Hub
+      uses: docker/login-action@v2
+      with:
+        registry: ghcr.io
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+    - name: Build and push Docker images
+      uses: docker/build-push-action@v3.3.0
+      with:
+        context: ./ml_api
+        file: ./ml_api/Dockerfile
+        no-cache: true
+        push: true
+        tags: fmstrat/obico-ml-api:latest
